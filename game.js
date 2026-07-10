@@ -115,7 +115,7 @@ const el = {
 
 const ctx = el.canvas.getContext("2d");
 const { Engine, Bodies, Body, Composite } = Matter;
-const physics = Engine.create({ gravity: { x: 0, y: .84, scale: .001 } });
+const physics = Engine.create({ gravity: { x: 0, y: .7, scale: .001 } });
 const INTAKE = { x: 260, y: 411 };
 let balls = [];
 let walls = [];
@@ -157,11 +157,11 @@ function makeBall(x, y, index = 0, forceGold = false) {
   const color = randomColor();
   const gold = forceGold || state.rng() < .055;
   const body = Bodies.circle(x, y, radius, {
-    restitution: .43,
-    friction: .055,
-    frictionStatic: .12,
-    frictionAir: .011,
-    density: .0018,
+    restitution: .5,
+    friction: .035,
+    frictionStatic: .07,
+    frictionAir: .006,
+    density: .00125,
     slop: .04,
   });
   body.gumball = gold ? { name: "Golden gumball", value: "#f6c83c", gold: true } : color;
@@ -258,6 +258,9 @@ function animationLoop(now) {
   const candidates = intakeCandidates();
   el.canvas.dataset.ballCount = String(balls.length);
   el.canvas.dataset.intakeColor = candidates[0]?.gumball.value || "";
+  const speeds = balls.map((ball) => ball.speed);
+  el.canvas.dataset.averageSpeed = (speeds.reduce((sum, speed) => sum + speed, 0) / speeds.length).toFixed(2);
+  el.canvas.dataset.maximumSpeed = Math.max(...speeds).toFixed(2);
   ctx.clearRect(0, 0, el.canvas.width, el.canvas.height);
   balls.forEach((ball) => drawBall(ball, candidates.indexOf(ball)));
 
@@ -306,7 +309,18 @@ function nudge(direction) {
 function shakeMachine() {
   if (!state.running || state.busy || state.shake < 55) return;
   state.shake -= 55;
-  applyMachineForce(state.rng() > .5 ? 1 : -1, .022, -.04);
+  const pulse = (strength) => {
+    balls.forEach((ball, index) => {
+      const side = index % 2 ? 1 : -1;
+      const horizontal = (state.rng() - .5) * strength + side * strength * .35;
+      const vertical = -.065 - state.rng() * strength * 1.45;
+      Body.applyForce(ball, ball.position, { x: horizontal, y: vertical });
+      Body.setAngularVelocity(ball, (state.rng() - .5) * .3);
+    });
+  };
+  pulse(.05);
+  setTimeout(() => state.running && pulse(.04), 90);
+  setTimeout(() => state.running && pulse(.032), 180);
   el.machine.classList.remove("shaking");
   void el.machine.offsetWidth;
   el.machine.classList.add("shaking");
