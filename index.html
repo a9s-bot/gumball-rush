@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f6f0dc" />
-    <meta name="description" content="Match colorful gumballs, build sweet streaks, and chase a high score in Gumball Rush." />
+    <meta name="description" content="Master a physics-driven candy machine, fill orders, and build sweet streaks in Gumball Rush." />
     <link rel="icon" href="data:," />
     <title>Gumball Rush</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,96 +21,107 @@
       </a>
       <div class="top-stats" aria-label="Game statistics">
         <div class="stat"><span>Score</span><strong id="score">0000</strong></div>
-        <div class="stat timer-stat"><span>Time</span><strong id="timer">0:45</strong></div>
+        <div class="stat timer-stat"><span id="roundMetricLabel">Time</span><strong id="timer">0:45</strong></div>
         <div class="stat"><span>Best</span><strong id="best">0000</strong></div>
       </div>
       <div class="header-actions">
-        <button class="icon-button" id="soundButton" type="button" aria-label="Mute sound" title="Mute sound">
-          <i data-lucide="volume-2"></i>
-        </button>
-        <button class="icon-button" id="fullscreenButton" type="button" aria-label="Enter fullscreen" title="Enter fullscreen">
-          <i data-lucide="maximize"></i>
-        </button>
+        <button class="icon-button" id="themeButton" type="button" aria-label="Change machine style" title="Change machine style"><i data-lucide="palette"></i></button>
+        <button class="icon-button" id="soundButton" type="button" aria-label="Mute sound" title="Mute sound"><i data-lucide="volume-2"></i></button>
+        <button class="icon-button" id="fullscreenButton" type="button" aria-label="Enter fullscreen" title="Enter fullscreen"><i data-lucide="maximize"></i></button>
       </div>
     </header>
 
     <main class="game-shell">
-      <section class="machine-stage" aria-label="Gumball machine">
+      <section class="machine-stage" aria-label="Physics gumball machine">
         <div class="burst burst-left" aria-hidden="true"></div>
         <div class="burst burst-right" aria-hidden="true"></div>
 
         <div class="machine" id="machine">
           <div class="machine-cap"><span>GUMBALL</span></div>
           <div class="globe-wrap">
-            <canvas id="globeCanvas" width="520" height="450" aria-hidden="true"></canvas>
+            <canvas id="globeCanvas" width="520" height="450" aria-label="Gumballs moving inside the machine"></canvas>
+            <div class="intake-marker" aria-hidden="true"><i></i></div>
             <div class="glass-shine" aria-hidden="true"></div>
           </div>
           <div class="neck"></div>
           <div class="machine-body">
             <div class="coin-slot" aria-hidden="true"><span>25¢</span><i></i></div>
-            <button class="knob" id="dropButton" type="button" aria-label="Drop a gumball">
-              <span class="knob-grip"></span>
-            </button>
-            <div class="chute">
-              <div class="chute-dark">
-                <div class="dispensed-ball" id="dispensedBall"></div>
-              </div>
-            </div>
+            <button class="knob" id="dropButton" type="button" aria-label="Dispense intake gumball"><span class="knob-grip"></span></button>
+            <div class="chute"><div class="chute-dark"><div class="dispensed-ball" id="dispensedBall"></div></div></div>
             <div class="machine-badge">SWEET<br />STREAK</div>
           </div>
           <div class="machine-foot"></div>
         </div>
 
+        <div class="skill-controls" aria-label="Machine controls">
+          <button class="control-button" id="nudgeLeft" type="button" aria-label="Nudge machine left" title="Nudge left"><i data-lucide="arrow-left"></i></button>
+          <div class="timing-control">
+            <div class="timing-label"><span>Knob timing</span><strong id="timingGrade">GOOD</strong></div>
+            <div class="timing-track" id="timingTrack" aria-label="Moving timing gauge"><i class="perfect-zone"></i><b id="timingCursor"></b></div>
+          </div>
+          <button class="control-button" id="nudgeRight" type="button" aria-label="Nudge machine right" title="Nudge right"><i data-lucide="arrow-right"></i></button>
+          <button class="shake-button" id="shakeButton" type="button"><i data-lucide="waves"></i><span>SHAKE</span></button>
+          <div class="shake-meter" aria-label="Shake energy"><i id="shakeFill"></i></div>
+        </div>
+
         <div class="drop-command">
           <button id="playButton" type="button"><i data-lucide="play"></i><span>START ROUND</span></button>
-          <p id="commandHint">45 second sugar rush</p>
+          <p id="commandHint">Intake ready</p>
         </div>
       </section>
 
       <aside class="game-panel" aria-label="Current round">
-        <div class="panel-heading">
-          <span class="round-dot"></span>
-          <span id="roundStatus">Ready to play</span>
-        </div>
+        <div class="panel-heading"><span class="round-dot"></span><span id="roundStatus">Ready to play</span><strong id="levelBadge">LV 1</strong></div>
+
+        <section class="mode-section" aria-labelledby="modeTitle">
+          <div class="section-label"><h2 id="modeTitle">Game mode</h2><span id="modeNote">45 sec</span></div>
+          <div class="mode-tabs" role="group" aria-label="Game mode">
+            <button class="selected" type="button" data-mode="rush">Rush</button>
+            <button type="button" data-mode="precision">Precision</button>
+            <button type="button" data-mode="daily">Daily</button>
+          </div>
+        </section>
 
         <section class="order-section" aria-labelledby="orderTitle">
-          <div class="section-label"><h2 id="orderTitle">Next order</h2><span id="orderValue">+100</span></div>
-          <div class="order-ticket" id="orderTicket">
-            <div class="target-ball" id="targetBall"></div>
-            <div><strong id="targetName">Cherry pop</strong><span>Today's pick</span></div>
-            <div class="ticket-edge" aria-hidden="true"></div>
-          </div>
+          <div class="section-label"><h2 id="orderTitle">Order queue</h2><span id="orderValue">+100</span></div>
+          <div class="order-queue" id="orderQueue"></div>
         </section>
 
         <section class="combo-section" aria-labelledby="comboTitle">
           <div class="section-label"><h2 id="comboTitle">Sweet streak</h2><span id="comboValue">x1</span></div>
-          <div class="combo-track" aria-label="Combo progress">
-            <i></i><i></i><i></i><i></i><i></i>
-          </div>
-          <p>Streak meter</p>
+          <div class="combo-track" aria-label="Combo progress"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="round-phase"><span id="phaseLabel">Warm up</span><i><b id="phaseFill"></b></i></div>
+        </section>
+
+        <section class="power-section" aria-labelledby="powerTitle">
+          <div class="section-label"><h2 id="powerTitle">Power-up</h2><span id="powerCharge">0 / 3</span></div>
+          <button class="power-slot" id="powerButton" type="button" disabled><i data-lucide="zap"></i><span><strong id="powerName">Building charge</strong><small id="powerDescription">Match orders to earn a power-up</small></span></button>
         </section>
 
         <section class="collection-section" aria-labelledby="collectionTitle">
           <div class="section-label"><h2 id="collectionTitle">Candy tray</h2><span id="collectedCount">0 / 8</span></div>
-          <div class="collection-grid" id="collectionGrid">
-            <div></div><div></div><div></div><div></div>
-            <div></div><div></div><div></div><div></div>
-          </div>
+          <div class="collection-grid" id="collectionGrid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </section>
 
-        <div class="gold-note"><span class="mini-gold"></span><p><strong>Golden gumball</strong><br />Rare drop · +250 points</p></div>
+        <div class="gold-note"><span class="mini-gold"></span><p><strong>Golden multiplier</strong><br />Rare candy · next score ×2</p></div>
       </aside>
     </main>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="achievement-pop" id="achievementPop" role="status" aria-live="polite"><i data-lucide="award"></i><span><small>ACHIEVEMENT</small><strong id="achievementName"></strong></span></div>
 
     <div class="modal" id="resultModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
       <div class="modal-card">
-        <span class="modal-kicker">ROUND COMPLETE</span>
+        <span class="modal-kicker" id="resultKicker">ROUND COMPLETE</span>
         <h2 id="resultTitle">Sugar rush!</h2>
-        <div class="final-score"><span>Final score</span><strong id="finalScore">0000</strong></div>
-        <div class="result-row"><span>Best streak</span><strong id="finalStreak">0</strong></div>
-        <div class="result-row"><span>Orders filled</span><strong id="finalMatches">0</strong></div>
+        <div class="final-score"><span>Final score</span><strong id="finalScore">0000</strong><small id="medalLabel">BRONZE RUN</small></div>
+        <div class="result-grid">
+          <div><span>Best streak</span><strong id="finalStreak">0</strong></div>
+          <div><span>Orders</span><strong id="finalMatches">0</strong></div>
+          <div><span>Accuracy</span><strong id="finalAccuracy">0%</strong></div>
+          <div><span>Perfect drops</span><strong id="finalPerfect">0</strong></div>
+        </div>
+        <div class="next-goal"><span>Next run</span><strong id="nextGoal">Beat your best</strong></div>
         <button id="replayButton" type="button"><i data-lucide="rotate-ccw"></i>PLAY AGAIN</button>
       </div>
     </div>
