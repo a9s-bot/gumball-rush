@@ -71,7 +71,7 @@
       </section>
 
       <aside class="game-panel" aria-label="Current round">
-        <div class="panel-heading"><span class="round-dot"></span><span id="roundStatus">Ready to play</span><strong id="levelBadge">LV 1</strong></div>
+        <div class="panel-heading"><span class="round-dot"></span><span id="roundStatus">Ready to play</span><button class="panel-help" id="helpButton" type="button" aria-label="Open game rules" title="Game rules"><i data-lucide="circle-help"></i></button><strong id="levelBadge">LV 1</strong></div>
 
         <section class="mode-section" aria-labelledby="modeTitle">
           <div class="section-label"><h2 id="modeTitle">Game mode</h2><span id="modeNote">45 sec</span></div>
@@ -109,6 +109,21 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <div class="achievement-pop" id="achievementPop" role="status" aria-live="polite"><i data-lucide="award"></i><span><small>ACHIEVEMENT</small><strong id="achievementName"></strong></span></div>
+
+    <div class="rules-modal" id="rulesModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+      <div class="rules-sheet">
+        <div class="rules-heading"><div><span>PLAYER GUIDE</span><h2 id="rulesTitle">How scoring works</h2></div><button id="closeRulesButton" type="button" aria-label="Close game rules"><i data-lucide="x"></i></button></div>
+        <div class="rules-grid">
+          <section><h3>Machine</h3><p>The highlighted balls are closest to the intake. Nudging and shaking physically change their positions; the body reaching the intake becomes the result.</p></section>
+          <section><h3>Timing</h3><p><strong>Perfect</strong> adds 75 points and the strongest intake pull. <strong>Good</strong> adds 30 with a medium pull. <strong>Risky</strong> has no bonus and the weakest pull.</p></section>
+          <section><h3>Orders</h3><p>Queue values are 100, 65, and 40 points. Either orders accept two colors. Recipes must be completed in sequence. Rush orders score 1.5×.</p></section>
+          <section><h3>Streaks</h3><p>Each completed order raises the multiplier. A ball matching no order resets it. Recipe steps and golden balls preserve the current streak.</p></section>
+          <section><h3>Golden candy</h3><p>A golden gumball awards 100 points and doubles the next scoring drop. A second golden can raise the stored multiplier to 4×.</p></section>
+          <section><h3>Power-ups</h3><p>Complete three orders to charge one. Press P or select the power slot to activate bombs, doubles, extra time, or the candy magnet.</p></section>
+        </div>
+        <div class="rules-controls"><span><kbd>Space</kbd> Dispense</span><span><kbd>←</kbd><kbd>→</kbd> Nudge</span><span><kbd>↑</kbd><kbd>↓</kbd> Shake</span><span><kbd>P</kbd> Power</span></div>
+      </div>
+    </div>
 
     <div class="modal" id="resultModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
       <div class="modal-card">

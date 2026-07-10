@@ -103,6 +103,9 @@ body[data-theme="mint"] { --red: #2b9a79; --red-dark: #17664f; --mint: #f0c5cf; 
 .game-panel { width: 330px; background: #fffaf0; border: 3px solid var(--ink); box-shadow: 9px 9px 0 var(--ink); align-self: center; }
 .panel-heading { height: 46px; display: flex; align-items: center; gap: 9px; padding: 0 15px; border-bottom: 3px solid var(--ink); background: var(--yellow); font: 800 13px "Baloo 2"; text-transform: uppercase; }
 .panel-heading strong { margin-left: auto; padding-left: 9px; border-left: 2px solid var(--ink); }
+.panel-help { width: 28px; height: 28px; margin-left: auto; padding: 0; border: 0; background: transparent; display: grid; place-items: center; cursor: pointer; }
+.panel-help + strong { margin-left: 0; }
+.panel-help svg { width: 18px; }
 .round-dot { width: 10px; height: 10px; border-radius: 50%; background: #8e8a7e; border: 2px solid var(--ink); }
 .round-dot.live { background: #50b96d; box-shadow: 0 0 0 4px rgba(80,185,109,.2); }
 .game-panel section { padding: 13px 15px; border-bottom: 2px dashed #9a9588; }
@@ -162,6 +165,23 @@ body[data-theme="mint"] { --red: #2b9a79; --red-dark: #17664f; --mint: #f0c5cf; 
 .achievement-pop small,.achievement-pop strong { display: block; }
 .achievement-pop small { font: 800 9px "Baloo 2"; }
 .achievement-pop strong { font: 800 12px "Baloo 2"; }
+
+.rules-modal { position: fixed; z-index: 79; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(32,34,36,.74); backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity .2s; }
+.rules-modal.open { opacity: 1; pointer-events: auto; }
+.rules-sheet { width: min(720px,100%); max-height: min(760px,calc(100vh - 40px)); overflow-y: auto; border: 4px solid var(--ink); background: #fffaf0; box-shadow: 11px 11px 0 var(--yellow); }
+.rules-heading { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 15px 18px; border-bottom: 3px solid var(--ink); background: var(--yellow); }
+.rules-heading span { display: block; font: 800 10px "Baloo 2"; color: var(--red-dark); }
+.rules-heading h2 { margin: 0; font: 800 27px/1 "Baloo 2"; }
+.rules-heading button { flex: 0 0 auto; width: 38px; height: 38px; padding: 0; border: 2px solid var(--ink); background: #fffaf0; box-shadow: 3px 3px 0 var(--ink); display: grid; place-items: center; cursor: pointer; }
+.rules-heading svg { width: 19px; }
+.rules-grid { display: grid; grid-template-columns: repeat(2,1fr); }
+.rules-grid section { min-height: 138px; padding: 16px 18px; border-right: 1px solid #b9b09e; border-bottom: 1px solid #b9b09e; }
+.rules-grid section:nth-child(2n) { border-right: 0; }
+.rules-grid h3 { margin: 0 0 5px; font: 800 14px "Baloo 2"; text-transform: uppercase; }
+.rules-grid p { margin: 0; font-size: 12px; line-height: 1.5; }
+.rules-controls { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 13px 18px; background: #27282a; color: white; font-size: 10px; font-weight: 700; }
+.rules-controls span { display: inline-flex; align-items: center; gap: 5px; }
+kbd { min-width: 24px; height: 24px; padding: 3px 6px; border: 1px solid white; background: #444648; box-shadow: 0 2px 0 #111; color: white; font: 800 11px "DM Sans"; text-align: center; }
 
 .modal { position: fixed; z-index: 80; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(32,34,36,.74); backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity .2s; }
 .modal.open { opacity: 1; pointer-events: auto; }
@@ -235,6 +255,13 @@ body[data-theme="mint"] { --red: #2b9a79; --red-dark: #17664f; --mint: #f0c5cf; 
   .burst { display: none; }
   .toast { top: 84px; max-width: calc(100% - 28px); font-size: 12px; }
   .achievement-pop { top: 84px; right: 14px; width: calc(100% - 28px); }
+  .rules-modal { padding: 12px; }
+  .rules-sheet { max-height: calc(100vh - 24px); }
+  .rules-heading { min-height: 70px; padding: 12px 14px; }
+  .rules-heading h2 { font-size: 23px; }
+  .rules-grid { grid-template-columns: 1fr; }
+  .rules-grid section { min-height: 0; padding: 13px 14px; border-right: 0; }
+  .rules-controls { padding: 12px 14px; gap: 8px 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

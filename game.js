@@ -111,6 +111,9 @@ const el = {
   levelBadge: document.querySelector("#levelBadge"),
   achievementPop: document.querySelector("#achievementPop"),
   achievementName: document.querySelector("#achievementName"),
+  help: document.querySelector("#helpButton"),
+  rulesModal: document.querySelector("#rulesModal"),
+  closeRules: document.querySelector("#closeRulesButton"),
 };
 
 const ctx = el.canvas.getContext("2d");
@@ -121,6 +124,7 @@ let balls = [];
 let walls = [];
 let audioCtx;
 let lastFrame = performance.now();
+let rulesReturnFocus;
 
 function loadProfile() {
   const fallback = { xp: 0, totalScore: 0, totalOrders: 0, games: 0, best: {}, achievements: [], theme: 0 };
@@ -733,6 +737,19 @@ function applyTheme(index) {
   saveProfile();
 }
 
+function openRules() {
+  rulesReturnFocus = document.activeElement;
+  el.rulesModal.classList.add("open");
+  el.rulesModal.setAttribute("aria-hidden", "false");
+  el.closeRules.focus();
+}
+
+function closeRules() {
+  el.rulesModal.classList.remove("open");
+  el.rulesModal.setAttribute("aria-hidden", "true");
+  rulesReturnFocus?.focus();
+}
+
 el.play.addEventListener("click", () => state.running ? dispense() : startRound());
 el.drop.addEventListener("click", dispense);
 el.replay.addEventListener("click", startRound);
@@ -740,9 +757,18 @@ el.nudgeLeft.addEventListener("click", () => nudge(-1));
 el.nudgeRight.addEventListener("click", () => nudge(1));
 el.shakeButton.addEventListener("click", shakeMachine);
 el.powerButton.addEventListener("click", usePower);
+el.help.addEventListener("click", openRules);
+el.closeRules.addEventListener("click", closeRules);
+el.rulesModal.addEventListener("click", (event) => { if (event.target === el.rulesModal) closeRules(); });
 el.modeButtons.forEach((button) => button.addEventListener("click", () => configureMode(button.dataset.mode)));
 
 document.addEventListener("keydown", (event) => {
+  if (event.code === "Escape" && el.rulesModal.classList.contains("open")) {
+    event.preventDefault();
+    closeRules();
+    return;
+  }
+  if (el.rulesModal.classList.contains("open")) return;
   if (el.modal.classList.contains("open")) return;
   if (event.code === "Space" && !event.repeat) {
     event.preventDefault();

@@ -19,3 +19,5 @@ Open `http://localhost:8000`.
 - Fill any of the three queued orders to build streaks and charge power-ups.
 - Play Rush, limited-drop Precision, or the deterministic Daily machine.
 - Earn persistent XP, achievements, high scores, and machine styles.
+
+See [MECHANICS.md](MECHANICS.md) for exact scoring rules, timing values, power-ups, and modes.
