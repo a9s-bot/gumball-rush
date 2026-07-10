@@ -46,7 +46,7 @@
           <div class="neck"></div>
           <div class="machine-body">
             <div class="coin-slot" aria-hidden="true"><span>25¢</span><i></i></div>
-            <button class="knob" id="dropButton" type="button" aria-label="Dispense intake gumball"><span class="knob-grip"></span></button>
+            <button class="knob" id="dropButton" type="button" aria-label="Dispense intake gumball" aria-keyshortcuts="Space"><span class="knob-grip"></span></button>
             <div class="chute"><div class="chute-dark"><div class="dispensed-ball" id="dispensedBall"></div></div></div>
             <div class="machine-badge">SWEET<br />STREAK</div>
           </div>
@@ -54,18 +54,18 @@
         </div>
 
         <div class="skill-controls" aria-label="Machine controls">
-          <button class="control-button" id="nudgeLeft" type="button" aria-label="Nudge machine left" title="Nudge left"><i data-lucide="arrow-left"></i></button>
+          <button class="control-button" id="nudgeLeft" type="button" aria-label="Nudge machine left" aria-keyshortcuts="ArrowLeft" title="Nudge left"><i data-lucide="arrow-left"></i></button>
           <div class="timing-control">
             <div class="timing-label"><span>Knob timing</span><strong id="timingGrade">GOOD</strong></div>
             <div class="timing-track" id="timingTrack" aria-label="Moving timing gauge"><i class="perfect-zone"></i><b id="timingCursor"></b></div>
           </div>
-          <button class="control-button" id="nudgeRight" type="button" aria-label="Nudge machine right" title="Nudge right"><i data-lucide="arrow-right"></i></button>
-          <button class="shake-button" id="shakeButton" type="button"><i data-lucide="waves"></i><span>SHAKE</span></button>
+          <button class="control-button" id="nudgeRight" type="button" aria-label="Nudge machine right" aria-keyshortcuts="ArrowRight" title="Nudge right"><i data-lucide="arrow-right"></i></button>
+          <button class="shake-button" id="shakeButton" type="button" aria-keyshortcuts="ArrowUp ArrowDown S"><i data-lucide="waves"></i><span>SHAKE</span></button>
           <div class="shake-meter" aria-label="Shake energy"><i id="shakeFill"></i></div>
         </div>
 
         <div class="drop-command">
-          <button id="playButton" type="button"><i data-lucide="play"></i><span>START ROUND</span></button>
+          <button id="playButton" type="button" aria-keyshortcuts="Space"><i data-lucide="play"></i><span>START ROUND</span></button>
           <p id="commandHint">Intake ready</p>
         </div>
       </section>
@@ -95,7 +95,7 @@
 
         <section class="power-section" aria-labelledby="powerTitle">
           <div class="section-label"><h2 id="powerTitle">Power-up</h2><span id="powerCharge">0 / 3</span></div>
-          <button class="power-slot" id="powerButton" type="button" disabled><i data-lucide="zap"></i><span><strong id="powerName">Building charge</strong><small id="powerDescription">Match orders to earn a power-up</small></span></button>
+          <button class="power-slot" id="powerButton" type="button" aria-keyshortcuts="P" disabled><i data-lucide="zap"></i><span><strong id="powerName">Building charge</strong><small id="powerDescription">Match orders to earn a power-up</small></span></button>
         </section>
 
         <section class="collection-section" aria-labelledby="collectionTitle">

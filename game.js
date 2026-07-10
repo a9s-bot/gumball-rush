@@ -747,9 +747,19 @@ document.addEventListener("keydown", (event) => {
   if (event.code === "Space" && !event.repeat) {
     event.preventDefault();
     state.running ? dispense() : startRound();
-  } else if (event.code === "ArrowLeft") nudge(-1);
-  else if (event.code === "ArrowRight") nudge(1);
-  else if (event.code === "KeyS") shakeMachine();
+  } else if (event.code === "ArrowLeft" && state.running) {
+    event.preventDefault();
+    nudge(-1);
+  } else if (event.code === "ArrowRight" && state.running) {
+    event.preventDefault();
+    nudge(1);
+  } else if (["ArrowUp", "ArrowDown", "KeyS"].includes(event.code) && state.running) {
+    event.preventDefault();
+    shakeMachine();
+  } else if (event.code === "KeyP" && state.running) {
+    event.preventDefault();
+    usePower();
+  }
 });
 
 el.sound.addEventListener("click", () => {
