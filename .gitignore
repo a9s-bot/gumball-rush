@@ -1,4 +1,5 @@
 test-output/
 *.png
 .DS_Store
-
+.playwright-mcp/
+.wrangler/
