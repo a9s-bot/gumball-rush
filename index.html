@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f0dc" />
+    <meta name="description" content="Match colorful gumballs, build sweet streaks, and chase a high score in Gumball Rush." />
+    <link rel="icon" href="data:," />
+    <title>Gumball Rush</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="tile-wall" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Gumball Rush home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>GUMBALL<br />RUSH</span>
+      </a>
+      <div class="top-stats" aria-label="Game statistics">
+        <div class="stat"><span>Score</span><strong id="score">0000</strong></div>
+        <div class="stat timer-stat"><span>Time</span><strong id="timer">0:45</strong></div>
+        <div class="stat"><span>Best</span><strong id="best">0000</strong></div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-button" id="soundButton" type="button" aria-label="Mute sound" title="Mute sound">
+          <i data-lucide="volume-2"></i>
+        </button>
+        <button class="icon-button" id="fullscreenButton" type="button" aria-label="Enter fullscreen" title="Enter fullscreen">
+          <i data-lucide="maximize"></i>
+        </button>
+      </div>
+    </header>
+
+    <main class="game-shell">
+      <section class="machine-stage" aria-label="Gumball machine">
+        <div class="burst burst-left" aria-hidden="true"></div>
+        <div class="burst burst-right" aria-hidden="true"></div>
+
+        <div class="machine" id="machine">
+          <div class="machine-cap"><span>GUMBALL</span></div>
+          <div class="globe-wrap">
+            <canvas id="globeCanvas" width="520" height="450" aria-hidden="true"></canvas>
+            <div class="glass-shine" aria-hidden="true"></div>
+          </div>
+          <div class="neck"></div>
+          <div class="machine-body">
+            <div class="coin-slot" aria-hidden="true"><span>25¢</span><i></i></div>
+            <button class="knob" id="dropButton" type="button" aria-label="Drop a gumball">
+              <span class="knob-grip"></span>
+            </button>
+            <div class="chute">
+              <div class="chute-dark">
+                <div class="dispensed-ball" id="dispensedBall"></div>
+              </div>
+            </div>
+            <div class="machine-badge">SWEET<br />STREAK</div>
+          </div>
+          <div class="machine-foot"></div>
+        </div>
+
+        <div class="drop-command">
+          <button id="playButton" type="button"><i data-lucide="play"></i><span>START ROUND</span></button>
+          <p id="commandHint">45 second sugar rush</p>
+        </div>
+      </section>
+
+      <aside class="game-panel" aria-label="Current round">
+        <div class="panel-heading">
+          <span class="round-dot"></span>
+          <span id="roundStatus">Ready to play</span>
+        </div>
+
+        <section class="order-section" aria-labelledby="orderTitle">
+          <div class="section-label"><h2 id="orderTitle">Next order</h2><span id="orderValue">+100</span></div>
+          <div class="order-ticket" id="orderTicket">
+            <div class="target-ball" id="targetBall"></div>
+            <div><strong id="targetName">Cherry pop</strong><span>Today's pick</span></div>
+            <div class="ticket-edge" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <section class="combo-section" aria-labelledby="comboTitle">
+          <div class="section-label"><h2 id="comboTitle">Sweet streak</h2><span id="comboValue">x1</span></div>
+          <div class="combo-track" aria-label="Combo progress">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <p>Streak meter</p>
+        </section>
+
+        <section class="collection-section" aria-labelledby="collectionTitle">
+          <div class="section-label"><h2 id="collectionTitle">Candy tray</h2><span id="collectedCount">0 / 8</span></div>
+          <div class="collection-grid" id="collectionGrid">
+            <div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div>
+          </div>
+        </section>
+
+        <div class="gold-note"><span class="mini-gold"></span><p><strong>Golden gumball</strong><br />Rare drop · +250 points</p></div>
+      </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="modal" id="resultModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+      <div class="modal-card">
+        <span class="modal-kicker">ROUND COMPLETE</span>
+        <h2 id="resultTitle">Sugar rush!</h2>
+        <div class="final-score"><span>Final score</span><strong id="finalScore">0000</strong></div>
+        <div class="result-row"><span>Best streak</span><strong id="finalStreak">0</strong></div>
+        <div class="result-row"><span>Orders filled</span><strong id="finalMatches">0</strong></div>
+        <button id="replayButton" type="button"><i data-lucide="rotate-ccw"></i>PLAY AGAIN</button>
+      </div>
+    </div>
+
+    <script src="vendor/matter.min.js"></script>
+    <script src="vendor/lucide.min.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
