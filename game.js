@@ -262,6 +262,7 @@ function animationLoop(now) {
   const candidates = intakeCandidates();
   el.canvas.dataset.ballCount = String(balls.length);
   el.canvas.dataset.intakeColor = candidates[0]?.gumball.value || "";
+  el.canvas.dataset.intakeBody = String(candidates[0]?.id || "");
   const speeds = balls.map((ball) => ball.speed);
   el.canvas.dataset.averageSpeed = (speeds.reduce((sum, speed) => sum + speed, 0) / speeds.length).toFixed(2);
   el.canvas.dataset.maximumSpeed = Math.max(...speeds).toFixed(2);
@@ -579,6 +580,7 @@ function dispense() {
   el.drop.disabled = true;
   el.play.disabled = true;
   const grade = timingGrade();
+  el.canvas.dataset.lastTimingGrade = grade.id;
   const likely = intakeCandidates()[0];
   const dx = INTAKE.x - likely.position.x;
   const dy = INTAKE.y - likely.position.y;
@@ -593,12 +595,23 @@ function dispense() {
   tone(120, .18, "square");
 
   setTimeout(() => {
-    const selected = intakeCandidates()[0];
+    const candidates = intakeCandidates();
+    let selected;
+    if (grade.id === "perfect") {
+      selected = balls.find((ball) => ball.id === likely.id) || candidates[0];
+    } else if (grade.id === "good") {
+      selected = state.rng() < .72 ? candidates[0] : candidates[1];
+    } else {
+      selected = state.rng() < .15
+        ? candidates[0]
+        : candidates[1 + Math.floor(state.rng() * Math.min(2, candidates.length - 1))];
+    }
     const result = selected.gumball;
     const index = balls.indexOf(selected);
     balls.splice(index, 1);
     Composite.remove(physics.world, selected);
     el.canvas.dataset.lastExtracted = result.value;
+    el.canvas.dataset.lastExtractedBody = String(selected.id);
     el.dispensed.style.backgroundColor = result.value;
     el.dispensed.classList.add("drop");
     tone(310, .08, "sine");

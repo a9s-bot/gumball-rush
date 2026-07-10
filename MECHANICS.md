@@ -10,11 +10,11 @@ When the player dispenses, the timing grade applies an additional pull to the le
 
 The timing cursor oscillates across the gauge. The grade is captured when the dispense action starts.
 
-| Grade | Center distance | Order bonus | Intake pull |
-| --- | ---: | ---: | ---: |
-| Perfect | 9.5% or less | +75 | Strong |
-| Good | 25% or less | +30 | Medium |
-| Risky | Outside the good zone | +0 | Weak |
+| Grade | Center distance | Order bonus | Intake behavior |
+| --- | ---: | ---: | --- |
+| Perfect | 9.5% or less | +75 | Locks the primary highlighted body |
+| Good | 25% or less | +30 | 72% closest body, 28% secondary body |
+| Risky | Outside the good zone | +0 | 15% primary body, 85% secondary body |
 
 Timing bonuses apply when an order is completed. Perfect non-golden drops also count toward the Precision Expert achievement.
 
